@@ -114,11 +114,13 @@
     }
 </style>
 <script>
-    /*window.onload = function () {
-        const input = document.getElementById("exampleFormControlInput1").value;
-        console.log(input);
-        document.getElementById("form").action = "http://localhost:8080/user/" + input;
-    };*/
+    window.onload = function() {
+        var message = "[[${errorMessage}]]";
+        if(message != null) {
+            alert(message);
+        }
+
+    };
 </script>
 <body>
 <div class="container">
@@ -155,6 +157,11 @@
                 <label for="exampleInputPassword2" class="form-label">Password</label>
                 <input type="password" class="form-control" style="font-size: 40px;"
                        name="password">
+            </div>
+            <div class="mb-3 my_form">
+                <label for="exampleInputPassword2" class="form-label">Repeat password</label>
+                <input type="password" class="form-control" style="font-size: 40px;"
+                       name="repeatedPassword">
             </div>
         </div>
         <br>
