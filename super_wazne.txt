@@ -1,4 +1,10 @@
 Działanie:
 Aplikacja działa na porcie 443 (https).
 docker-compose up -d - polecenie przed skorzystaniem z aplikacji
-abgvy56!@#$%=-mn
+
+Użycie:
+* logowanie za pomocą loginu admin i hasła admin123 powoduje zablokowanie dostępu dla tego adresu IP i przeniesienie na tajną stronę
+* wejście na /admin powoduje to samo co powyżej
+* trzykrotne wpisanie złego hasła dla jednego użytkonika podczas sesji powoduje blokadę dostępu dla danego IP
+* użytkownik może udostępniać swoje notatki jako publiczne i prywatne (szyfrowane lub nieszyfrowane)
+* niezalogowany użytkowwnik może wejść na /notes, ale nie będzie mógł dodać notatek, ani ich przeglądać
