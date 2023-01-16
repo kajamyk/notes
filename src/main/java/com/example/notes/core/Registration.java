@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Registration {
     @Autowired
     UserService userService;
+
     public boolean arePasswordsMatching(String password, String repeatedPassword) {
         return password.equals(repeatedPassword);
     }
@@ -15,11 +16,32 @@ public class Registration {
     public boolean isPasswordEntropySufficient(String password) {
         return shannonEntropy(password) > 4;
     }
+
     public boolean isPasswordLengthSufficient(String password) {
         return password.length() > 8;
     }
 
+    public boolean isUserNameCorrect(String userName) {
+        for (int i = 0; i < userName.length(); i++) {
+            if (!isCharCorrect(userName.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    private boolean isCharCorrect(char c) {
+        if (c == '_') {
+            return true;
+        }
+        if (c >= 'a' && c <= 'z') {
+            return true;
+        }
+        if (c >= 'A' && c <= 'Z') {
+            return true;
+        }
+        return c >= '0' && c <= '9';
+    }
 
     private double shannonEntropy(String password) {
         double entropy = 0;
@@ -55,6 +77,7 @@ public class Registration {
     private static class CharFreq {
         public final String s;
         public int count = 1;
+
         public CharFreq(String in) {
             this.s = in;
         }

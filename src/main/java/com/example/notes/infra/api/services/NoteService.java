@@ -8,10 +8,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+
 public class NoteService {
     @Autowired
-    JpaNoteRepository noteRepository;
+    JpaNoteRepository jpaNoteRepository;
+
+    public void addPublicNote(String text) {
+        Note note = new Note(text, true);
+        jpaNoteRepository.save(note);
+    }
+
     public List<Note> getAllNotes() {
-        return noteRepository.findAll();
+        return jpaNoteRepository.findAll().stream().filter(Note::isPublic).toList();
     }
 }

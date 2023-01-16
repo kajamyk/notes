@@ -2,13 +2,10 @@ package com.example.notes.core;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
-import org.hibernate.validator.constraints.UniqueElements;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
 
@@ -20,7 +17,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     @NotNull
-    @UniqueElements
     private String userName;
     @NotNull
     private String userPassword;
@@ -30,6 +26,7 @@ public class User {
     public User() {
 
     }
+
     public User(String userName, String userPassword) {
         this.userName = userName;
         this.userPassword = userPassword;

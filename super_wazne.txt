@@ -1,0 +1,4 @@
+Działanie:
+Aplikacja działa na porcie 443 (https).
+docker-compose up -d - polecenie przed skorzystaniem z aplikacji
+abgvy56!@#$%=-mn
