@@ -4,15 +4,18 @@ import com.example.notes.core.Encryption;
 import com.example.notes.core.Note;
 import com.example.notes.core.User;
 import com.example.notes.infra.jpa.JpaUserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserService {
     @Autowired
     JpaUserRepository userRepository;
@@ -61,6 +64,7 @@ public class UserService {
     public void addUserNote(String userName, String text, String password) throws Exception {
         User user = getUserByUserName(userName);
         assert user != null;
+        log.error(text);
         if (password != null) {
             user.getNotes().add(new Note(text, password));
         } else {
@@ -71,21 +75,23 @@ public class UserService {
 
     public List<String> getAllUserNotes(String userName) {
         List<Note> notes = noteService.getAllNotes();
+        List<String> finalList = new ArrayList<>();
         User user = getUserByUserName(userName);
-        try {
-            List<Note> userNotes = user.getNotes();
-            List<String> finalList = new ArrayList<>();
+        List<Note> userNotes = user.getNotes();
 
-            for (Note userNote : userNotes) {
-                if (!userNote.isEncrypted()) {
-                    notes.add(userNote);
+        try {
+            for(Note note : notes) {
+                if(note.isPublic()) {
+                    finalList.add(note.getNoteText());
+                }
+            }
+            for(Note userNote : userNotes) {
+                if(! userNote.isEncrypted()) {
+                    finalList.add(userNote.getNoteText());
                 }
             }
 
-            for (Note note : notes) {
-                finalList.add(note.getNoteText());
-            }
-
+            finalList.removeAll(Arrays.asList("", null));
             return finalList;
         } catch (Exception exception) {
             return null;

@@ -160,18 +160,17 @@
         </div>
         <br>
         <input type="text" name="password" style="width:100%" id="sId"><br><br>
-        <button class="button-56" role="button" style="float:right" type="submit">Decrypt</button>
+        <button class="button-56" role="button"  type="submit">Decrypt</button>
     </form>
 </div>
 
 <div class="container">
 
-    <form action="/notes/add" method="post" style="float:left; margin-left: 50px;">
-
+    <form action="/notes/add" id="myform" method="post" style="float:left; margin-left: 50px;">
         <div class="text_header">
             Add your notes here
         </div>
-        <textarea class="mceEditor" id="note" name="note" rows="20" cols="60">
+        <textarea class="tinymce" id="note" name="note" rows="20" cols="60">
 
         </textarea>
         <br>

@@ -32,10 +32,10 @@ public class NoteController {
     public ModelAndView addNote(@Valid @NonNull String note, @Valid String password) throws Exception {
         try {
             password = Jsoup.clean(password, Safelist.basic());
-            note = Jsoup.clean(note, Safelist.basic());
+            note = Jsoup.clean(note, Safelist.relaxed());
             HttpSession session = httpSessionFactory.getObject();
             String userName = (String) session.getAttribute("userName");
-
+            log.error(note);
             if (userService.getUserByUserName(userName) != null) {
                 userService.addUserNote(userName, note, password);
             }
@@ -51,11 +51,12 @@ public class NoteController {
 
     @PostMapping("/addPublic")
     public ModelAndView addPublicNote(@Valid @NonNull String note, String password) {
+        log.error(note);
         try {
             HttpSession session = httpSessionFactory.getObject();
             String userName = (String) session.getAttribute("userName");
             if (userService.getUserByUserName(userName) != null) {
-                note = Jsoup.clean(note, Safelist.basic());
+                note = Jsoup.clean(note, Safelist.relaxed());
                 noteService.addPublicNote(note);
             }
             return getNotesPage();
@@ -70,12 +71,14 @@ public class NoteController {
 
     @GetMapping("")
     public ModelAndView getNotesPage() {
+
         try {
             HttpSession session = httpSessionFactory.getObject();
             String userName = (String) session.getAttribute("userName");
             if (userService.getUserByUserName(userName) != null) {
                 ModelAndView modelAndView = new ModelAndView();
                 modelAndView.setViewName("notesPage");
+
                 modelAndView.addObject("notes", userService.getAllUserNotes(userName));
                 return modelAndView;
             }
